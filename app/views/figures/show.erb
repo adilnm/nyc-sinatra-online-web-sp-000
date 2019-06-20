@@ -1,5 +1,8 @@
-<h1><%=@figure.name%></h1>
-<ul>
+<table>
+  <th>Person Name</th>
+  <tr>
+      <td align="center"><a href="/figures/<%= @figure.id %>"><%= @figure.name %></a>
+      <ul>
       Landmarks:
         <%@figure.landmarks.each do |landmark|%>
         <li><%=landmark.name%></li>
@@ -11,4 +14,6 @@
         <li><%=title.name%></li>
         <%end%>
       </ul>
-<% end %>
+  </tr>
+      </td>
+</table>

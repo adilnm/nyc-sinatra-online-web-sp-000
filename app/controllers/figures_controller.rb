@@ -1,32 +1,52 @@
+class FiguresController < ApplicationController
+  get '/figures/new' do
+    @titles=Title.all
+    @landmarks=Landmark.all
+    erb :'figures/new'
+  end
 
-<form action="/figures/<%= @figure.id %>" method="POST">
-<input type="hidden" name="_method" value="patch">
-<label>Name</label>
-<input type="text" id="figure_name" name="figure[name]" value="<%= @figure.name%>"><br></br>
-<label>Edit Landmarks:</label><br>
+  post '/figures' do
+    @figure=Figure.create(params[:figure])
 
-<% Landmark.all.each do |landmark| %>
-<label><%= landmark.name %></label>
-<input type="checkbox" name="figure[landmark_ids][]" value="<%= landmark.id %>" id="<%= landmark.name %>" <%='checked' if @figure.landmarks.include?(landmark) %>>
-<% end %>
-<label>Add New:</label>
-<input type="text" id="new_landmark" name="landmark[name]"><br></br>
+    unless params[:title][:name].empty?
+      @figure.titles << Title.create(params[:title])
+    end
 
+    unless params[:landmark][:name].empty?
+      @figure.landmarks << Landmark.create(params[:landmark])
+    end
+  end
 
-<label>Edit Titles</label><br>
-<% Title.all.each do |title| %>
-<label><%= title.name %></label>
-<input type="checkbox" name="figure[title_ids][]" value="<%= title.id %>" id="<%= title.name %>" <%='checked' if @figure.titles.include?(title) %>>
-<% end %></br>
-<label>Add New Title:</label>
-<input type="text" id="new_title" name="title[name]"><br></br>
+  get '/figures' do
+    @figures=Figure.all
 
+    erb :'/figures/index'
+  end
 
+  get '/figures/:id' do
+    @figure=Figure.find(params[:id])
+    erb :'/figures/show'
+  end
 
+  get '/figures/:id/edit' do
+    @figure=Figure.find(params[:id])
+    @titles=Title.all
+    @landmarks=Landmark.all
+    erb :'/figures/edit'
+  end
 
-<input type="submit" value="Edit Figure">
-
-</form>
+  patch '/figures/:id' do
+      @figure = Figure.find_by_id(params[:id])
+      @figure.update(params[:figure])
+      unless params[:title][:name].empty?
+        @figure.titles << Title.create(params[:title])
+      end
+      unless params[:landmark][:name].empty?
+        @figure.landmarks << Landmark.create(params[:landmark])
+      end
+      @figure.save
+      redirect to "/figures/#{@figure.id}"
+    end
 
 
 end

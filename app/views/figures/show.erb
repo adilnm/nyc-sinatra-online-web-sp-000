@@ -1,4 +1,4 @@
-<h1><%=@figure.name%></h1>
+<a href="/figures/<%= @figure.id %>"><%= @figure.name %></a>
 <h2>Landmarks: </h2>
 <ul>
   <%@figure.landmarks.each do |landmak|%>

@@ -23,4 +23,14 @@ class LandmarksController < ApplicationController
     @landmark=Landmark.find(params[:id])
     erb :'/landmarks/edit'
   end
+
+  patch '/landmarks/:id' do
+  @landmark=Landmark.find(params[:id])
+  @landmark.update(params[:landmarks])
+
+
+
+
+  end
+
 end

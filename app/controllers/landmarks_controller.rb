@@ -19,7 +19,7 @@ class LandmarksController < ApplicationController
     erb :'/landmarks/show'
   end
 
-  get '/figures/:id/edit' do
+  get '/landmarks/:id/edit' do
     @landmarks=Landmark.all
     erb :'/landmarks/edit'
   end

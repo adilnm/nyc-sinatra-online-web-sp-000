@@ -21,6 +21,6 @@ class LandmarksController < ApplicationController
 
   get '/figures/:id/edit' do
     @landmarks=Landmark.all
-    erb :'/figures/edit'
+    erb :'/landmarks/edit'
   end
 end
